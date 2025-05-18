@@ -142,7 +142,21 @@ const ValueExchangeEcosystem = ({
     if (!svgRef.current) return;
     
     const currentData = activeModel === 'traditional' ? traditional : empathyLedger;
-    
+
+    // Deep clone and ensure all IDs are strings
+    const sankeyData = {
+      nodes: currentData.nodes.map(d => ({ ...d, id: String(d.id) })),
+      links: currentData.links.map(d => ({
+        ...d,
+        source: String(d.source),
+        target: String(d.target)
+      }))
+    };
+
+    // Defensive log
+    console.log('Sankey nodes:', sankeyData.nodes.map(n => n.id));
+    console.log('Sankey links:', sankeyData.links.map(l => [l.source, l.target]));
+
     const svg = d3.select(svgRef.current);
     svg.selectAll("*").remove();
     
@@ -159,8 +173,6 @@ const ValueExchangeEcosystem = ({
       .nodePadding(10)
       .extent([[0, 0], [innerWidth, innerHeight]]);
     
-    // Deep clone nodes and links to avoid d3-sankey mutation bugs
-    const sankeyData = JSON.parse(JSON.stringify(currentData));
     // Generate the sankey diagram
     const { nodes, links } = sankeyGen(sankeyData);
     
