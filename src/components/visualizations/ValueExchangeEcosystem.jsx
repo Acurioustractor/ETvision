@@ -159,12 +159,8 @@ const ValueExchangeEcosystem = ({
       .nodePadding(10)
       .extent([[0, 0], [innerWidth, innerHeight]]);
     
-    // Format the data for d3-sankey
-    const sankeyData = {
-      nodes: currentData.nodes.map(d => Object.assign({}, d)),
-      links: currentData.links.map(d => Object.assign({}, d))
-    };
-    
+    // Deep clone nodes and links to avoid d3-sankey mutation bugs
+    const sankeyData = JSON.parse(JSON.stringify(currentData));
     // Generate the sankey diagram
     const { nodes, links } = sankeyGen(sankeyData);
     
