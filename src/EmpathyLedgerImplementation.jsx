@@ -285,8 +285,6 @@ const EmpathyLedgerImplementation = () => {
 
           <SectionContainer title="Living Stories" description="Real-world examples demonstrating our principles in action">
             <div className="mt-8">
-              <h2 className="text-2xl font-bold mb-4">Living Stories</h2>
-              <p className="mb-4 text-gray-600">Real-world examples demonstrating our principles in action.</p>
               <StoryGallery limit={3} view="ET visual" />
             </div>
           </SectionContainer>
