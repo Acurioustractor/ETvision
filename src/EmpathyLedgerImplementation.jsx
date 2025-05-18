@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, RadialBarChart, RadialBar, BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import StoryGallery from './components/StoryGallery';
+import NarrativeSovereigntyJourney from './components/visualizations/NarrativeSovereigntyJourney';
 
 // Tab navigation component
 const TabNavigation = ({ tabs, activeTab, setActiveTab }) => (
@@ -190,9 +191,10 @@ const EmpathyLedgerImplementation = () => {
   // Main tab definitions
   const mainTabs = [
     { id: 'vision', label: 'Vision & Principles' },
-    { id: 'phase1', label: 'Phase 1: Foundation Building' },
-    { id: 'phase2', label: 'Phase 2: Ecosystem Development' },
-    { id: 'phase3', label: 'Phase 3: Systemic Transformation' },
+    { id: 'phase1', label: 'Phase 1' },
+    { id: 'phase2', label: 'Phase 2' },
+    { id: 'phase3', label: 'Phase 3' },
+    { id: 'visualisations', label: 'Visualisations' },
     { id: 'impact', label: 'Projected Impact' },
     { id: 'invest', label: 'Investment Opportunities' },
     { id: 'gallery', label: 'Gallery' },
@@ -1139,6 +1141,13 @@ const EmpathyLedgerImplementation = () => {
           description="Meet the storytellers and explore their journeys."
         >
           <StoryGallery view="ET visual" />
+        </SectionContainer>
+      )}
+
+      {/* Visualisations Tab */}
+      {activeMainTab === 'visualisations' && (
+        <SectionContainer title="Narrative Sovereignty Visualization" description="Tracking how stories maintain integrity and control through their journey">
+          <NarrativeSovereigntyJourney width={700} height={450} />
         </SectionContainer>
       )}
     </div>
