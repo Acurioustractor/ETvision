@@ -3,6 +3,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import StoryGallery from './components/StoryGallery';
 import NarrativeSovereigntyJourney from './components/visualizations/NarrativeSovereigntyJourney';
 import ValueExchangeEcosystem from './components/visualizations/ValueExchangeEcosystem';
+import ProximityCartography from './components/visualizations/ProximityCartography';
 
 // Tab navigation component
 const TabNavigation = ({ tabs, activeTab, setActiveTab }) => (
@@ -1151,6 +1152,9 @@ const EmpathyLedgerImplementation = () => {
           </SectionContainer>
           <SectionContainer title="Value Exchange Ecosystem" description="Visualizing how stories generate and distribute value">
             <ValueExchangeEcosystem width={800} height={500} />
+          </SectionContainer>
+          <SectionContainer title="Proximity Cartography" description="Visualizing and closing the distance between philanthropy and communities">
+            <ProximityCartography width={900} height={600} />
           </SectionContainer>
         </>
       )}
