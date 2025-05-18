@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, PieChart, Pie, Cell, RadialBarChart, RadialBar, BarChart, Bar, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
 import StoryGallery from './components/StoryGallery';
 import NarrativeSovereigntyJourney from './components/visualizations/NarrativeSovereigntyJourney';
+import ValueExchangeEcosystem from './components/visualizations/ValueExchangeEcosystem';
 
 // Tab navigation component
 const TabNavigation = ({ tabs, activeTab, setActiveTab }) => (
@@ -1146,9 +1147,14 @@ const EmpathyLedgerImplementation = () => {
 
       {/* Visualisations Tab */}
       {activeMainTab === 'visualisations' && (
-        <SectionContainer title="Narrative Sovereignty Visualization" description="Tracking how stories maintain integrity and control through their journey">
-          <NarrativeSovereigntyJourney width={700} height={450} />
-        </SectionContainer>
+        <>
+          <SectionContainer title="Narrative Sovereignty Visualization" description="Tracking how stories maintain integrity and control through their journey">
+            <NarrativeSovereigntyJourney width={700} height={450} />
+          </SectionContainer>
+          <SectionContainer title="Value Exchange Ecosystem" description="Visualizing how stories generate and distribute value">
+            <ValueExchangeEcosystem width={800} height={500} />
+          </SectionContainer>
+        </>
       )}
     </div>
   );
