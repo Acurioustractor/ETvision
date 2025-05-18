@@ -92,6 +92,32 @@ const defaultCheckpoints = [
   }
 ];
 
+function NarrativeSovereigntyJourneyMobile({ journeyData = defaultJourneyData }) {
+  const [step, setStep] = useState(0);
+  const stage = journeyData[step];
+  return (
+    <div className="md:hidden px-2 py-8 max-w-md mx-auto">
+      <h1 className="text-2xl font-bold text-center mb-2">Narrative Sovereignty Journey</h1>
+      <p className="text-base text-gray-600 text-center mb-6">Track the journey of a story and its sovereignty.</p>
+      <div className="flex items-center justify-center gap-2 mb-6">
+        {journeyData.map((s, i) => (
+          <div key={s.id} className={`h-2 w-8 rounded-full ${i === step ? 'bg-indigo-600' : 'bg-gray-300'}`}></div>
+        ))}
+      </div>
+      <div className="bg-white rounded-xl shadow-lg p-5 mb-4">
+        <div className="text-xs font-semibold uppercase text-indigo-500 mb-2 tracking-wider">Stage {step + 1} of {journeyData.length}</div>
+        <div className="text-xl font-bold text-indigo-900 mb-2">{stage.name}</div>
+        <div className="mb-3 text-gray-700">{stage.description}</div>
+        <div className="mt-4 text-gray-700 italic text-center text-base">{stage.tooltip}</div>
+      </div>
+      <div className="flex justify-between mt-4">
+        <button className="px-4 py-2 rounded-lg bg-gray-200 text-gray-700 font-semibold disabled:opacity-50" onClick={() => setStep(s => Math.max(0, s - 1))} disabled={step === 0}>Previous</button>
+        <button className="px-4 py-2 rounded-lg bg-indigo-600 text-white font-semibold disabled:opacity-50" onClick={() => setStep(s => Math.min(journeyData.length - 1, s + 1))} disabled={step === journeyData.length - 1}>Next</button>
+      </div>
+    </div>
+  );
+}
+
 const NarrativeSovereigntyJourney = ({
   journeyData = defaultJourneyData,
   checkpoints = defaultCheckpoints,
@@ -343,51 +369,56 @@ const NarrativeSovereigntyJourney = ({
   }, [journeyData, checkpoints, width, height, compareMode]);
 
   return (
-    <div className="narrative-sovereignty-journey-container">
-      <div className="flex justify-between items-center mb-4">
-        <h3 className="text-xl font-bold text-gray-800">Narrative Sovereignty Journey</h3>
-        <div className="flex items-center">
-          <label className="inline-flex items-center mr-4 cursor-pointer">
-            <input
-              type="checkbox"
-              checked={compareMode}
-              onChange={() => setCompareMode(!compareMode)}
-              className="form-checkbox h-5 w-5 text-indigo-600"
-            />
-            <span className="ml-2 text-sm text-gray-700">Compare with Traditional Model</span>
-          </label>
+    <>
+      <div className="hidden md:block">
+        <div className="narrative-sovereignty-journey-container">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-bold text-gray-800">Narrative Sovereignty Journey</h3>
+            <div className="flex items-center">
+              <label className="inline-flex items-center mr-4 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={compareMode}
+                  onChange={() => setCompareMode(!compareMode)}
+                  className="form-checkbox h-5 w-5 text-indigo-600"
+                />
+                <span className="ml-2 text-sm text-gray-700">Compare with Traditional Model</span>
+              </label>
+            </div>
+          </div>
+          
+          <div className="relative bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+            <svg ref={svgRef} width={width} height={height}></svg>
+            
+            {activeNode && showDetails && (
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="absolute bottom-4 left-4 right-4 bg-white p-4 rounded-lg shadow-md border border-indigo-100"
+              >
+                <h4 className="text-lg font-semibold text-gray-800">{activeNode.name}</h4>
+                <p className="text-sm text-gray-600">{activeNode.description}</p>
+                <div className="mt-2 flex items-center">
+                  <span className="text-sm font-medium mr-2">Sovereignty Level:</span>
+                  <div className="w-full bg-gray-200 rounded-full h-2.5">
+                    <div 
+                      className="bg-indigo-600 h-2.5 rounded-full" 
+                      style={{ width: `${activeNode.sovereigntyLevel}%` }}
+                    ></div>
+                  </div>
+                  <span className="ml-2 text-sm">{activeNode.sovereigntyLevel}%</span>
+                </div>
+              </motion.div>
+            )}
+          </div>
+          
+          <div className="mt-4 text-sm text-gray-500">
+            <p>This visualization maps the journey of stories from their origin to their ultimate impact, highlighting where narrative sovereignty is maintained or compromised, and the mechanisms that protect storyteller agency.</p>
+          </div>
         </div>
       </div>
-      
-      <div className="relative bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-        <svg ref={svgRef} width={width} height={height}></svg>
-        
-        {activeNode && showDetails && (
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="absolute bottom-4 left-4 right-4 bg-white p-4 rounded-lg shadow-md border border-indigo-100"
-          >
-            <h4 className="text-lg font-semibold text-gray-800">{activeNode.name}</h4>
-            <p className="text-sm text-gray-600">{activeNode.description}</p>
-            <div className="mt-2 flex items-center">
-              <span className="text-sm font-medium mr-2">Sovereignty Level:</span>
-              <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div 
-                  className="bg-indigo-600 h-2.5 rounded-full" 
-                  style={{ width: `${activeNode.sovereigntyLevel}%` }}
-                ></div>
-              </div>
-              <span className="ml-2 text-sm">{activeNode.sovereigntyLevel}%</span>
-            </div>
-          </motion.div>
-        )}
-      </div>
-      
-      <div className="mt-4 text-sm text-gray-500">
-        <p>This visualization maps the journey of stories from their origin to their ultimate impact, highlighting where narrative sovereignty is maintained or compromised, and the mechanisms that protect storyteller agency.</p>
-      </div>
-    </div>
+      <NarrativeSovereigntyJourneyMobile journeyData={journeyData} />
+    </>
   );
 };
 

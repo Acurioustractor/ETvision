@@ -3,25 +3,51 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsi
 import StoryGallery from './components/StoryGallery';
 import NarrativeSovereigntyJourney from './components/visualizations/NarrativeSovereigntyJourney';
 import ValueExchangeEcosystem from './components/visualizations/ValueExchangeEcosystem';
+import NarrativeMethodologyComparison from './components/NarrativeMethodologyComparison';
+import DeepListeningDepthGauge from './components/visualizations/DeepListeningDepthGauge';
+import SystemsChangeDynamicModel from './components/visualizations/SystemsChangeDynamicModel';
+import EnsembleEvidenceExplorer from './components/visualizations/EnsembleEvidenceExplorer';
 import ProximityCartography from './components/visualizations/ProximityCartography';
+import { MobileTabBar } from './components/MobileTabBar';
+
+// Add custom styles for logo glow and glassmorphism
+const customStyles = `
+@keyframes logo-glow {
+  0%, 100% { box-shadow: 0 0 32px 8px #38bdf8, 0 0 0 0 #fff0; }
+  50% { box-shadow: 0 0 64px 16px #818cf8, 0 0 0 0 #fff0; }
+}
+.animate-logo-glow {
+  animation: logo-glow 3s ease-in-out infinite;
+}
+.glassmorphism {
+  background: rgba(255,255,255,0.10);
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.15);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(255,255,255,0.18);
+}
+`;
 
 // Tab navigation component
 const TabNavigation = ({ tabs, activeTab, setActiveTab }) => (
-  <div className="flex flex-wrap border-b border-gray-200 mb-6">
-    {tabs.map((tab) => (
-      <button
-        key={tab.id}
-        className={`px-4 py-2 font-medium text-sm rounded-t-lg mr-2 ${
-          activeTab === tab.id
-            ? 'bg-indigo-600 text-white'
-            : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-        }`}
-        onClick={() => setActiveTab(tab.id)}
-      >
-        {tab.label}
-      </button>
-    ))}
-  </div>
+  <nav aria-label="Main navigation" className="sticky top-0 z-30 flex justify-center w-full mb-10">
+    <div className="flex bg-white/80 backdrop-blur-md rounded-full shadow-lg px-2 py-1 gap-1 border border-gray-200">
+      {tabs.map((tab) => (
+        <button
+          key={tab.id}
+          className={`px-5 py-2 rounded-full font-semibold text-base transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400
+            ${activeTab === tab.id
+              ? 'bg-indigo-600 text-white shadow-md scale-105'
+              : 'bg-gray-100 text-gray-700 hover:bg-indigo-100 hover:text-indigo-700'}`}
+          onClick={() => setActiveTab(tab.id)}
+          aria-current={activeTab === tab.id ? 'page' : undefined}
+        >
+          {tab.label}
+        </button>
+      ))}
+    </div>
+  </nav>
 );
 
 // Sub-tab navigation component
@@ -181,6 +207,19 @@ const sampleStories = [
   },
 ];
 
+// Sample organization assessment data
+const sampleAssessment = {
+  organization: "Horizon Foundation",
+  dimensions: [
+    { name: "Suspension of Judgment", score: 3.2 },
+    { name: "Emotional Awareness", score: 2.8 },
+    { name: "Diverse Perspectives", score: 3.5 },
+    { name: "Power Dynamics", score: 2.2 },
+    { name: "Narrative Integration", score: 3.0 },
+    { name: "Action on Feedback", score: 2.7 }
+  ]
+};
+
 // Main component
 const EmpathyLedgerImplementation = () => {
   // State for main tabs
@@ -227,16 +266,32 @@ const EmpathyLedgerImplementation = () => {
   ];
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8 text-gray-800 font-sans">
-      <header className="mb-12 text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Empathy Ledger</h1>
-        <h2 className="text-2xl font-semibold text-indigo-700 mb-6">Transformative Narrative Exchange Framework</h2>
-        <p className="text-lg text-gray-600 italic mx-auto max-w-3xl">
-          "In the realm of systems change, stories serve as both catalyst and witness—transforming systems while also illuminating transformation. This framework reimagines the ecosystem in which stories create change—one where narrative sovereignty, ethical exchange, and deep listening become the foundation for collective transformation."
-        </p>
+    <div className="min-h-screen bg-gradient-to-b from-[#0a0a23] to-[#181830] text-gray-800 font-sans">
+      {/* Inject custom styles */}
+      <style>{customStyles}</style>
+      <header className="flex flex-col items-center justify-center pt-16 pb-10">
+        <img
+          src="/assets/empathy-ledger-logo.png"
+          alt="Empathy Ledger Logo: Two spheres connected by a flowing, luminous path, symbolizing reciprocal value and connection"
+          className="w-44 h-44 mb-6 animate-logo-glow"
+          style={{ maxWidth: '320px' }}
+          tabIndex={0}
+        />
+        <h1 className="text-5xl font-extrabold text-white mb-2 tracking-tight drop-shadow-lg">Empathy Ledger</h1>
+        <h2 className="text-2xl font-semibold text-indigo-300 mb-6 drop-shadow">Transformative Narrative Exchange Framework</h2>
+        <blockquote className="max-w-2xl mx-auto text-lg italic text-indigo-100 glassmorphism px-8 py-4 shadow-lg mb-8">
+          "Stories are the threads that connect our human experience. The Empathy Ledger creates a living tapestry where individual narratives intertwine with systems, transforming both storytellers and listeners while illuminating pathways to profound change."
+        </blockquote>
+        <div className="md:hidden max-w-xs mx-auto mb-6 bg-indigo-900/80 text-indigo-100 text-center text-sm rounded-lg px-4 py-2 shadow-sm">
+          This website is primarily scaled for Desktop – head there for the full experience.
+        </div>
       </header>
-
-      <TabNavigation tabs={mainTabs} activeTab={activeMainTab} setActiveTab={setActiveMainTab} />
+      {/* Desktop/Tablet Navigation */}
+      <div className="hidden md:flex">
+        <TabNavigation tabs={mainTabs} activeTab={activeMainTab} setActiveTab={setActiveMainTab} />
+      </div>
+      {/* Mobile Navigation */}
+      <MobileTabBar activeTab={activeMainTab} setActiveTab={setActiveMainTab} />
 
       {/* Vision & Principles Tab */}
       {activeMainTab === 'vision' && (
@@ -249,6 +304,7 @@ const EmpathyLedgerImplementation = () => {
               This transformative approach addresses underlying power dynamics in how stories drive social change, moving from storytelling as extraction to storytelling as ethical exchange with measurable, distributed impact.
             </p>
           </SectionContainer>
+          <NarrativeMethodologyComparison />
 
           <SectionContainer title="Core Philosophical Foundations">
             <div className="grid md:grid-cols-3 gap-6">
@@ -284,7 +340,7 @@ const EmpathyLedgerImplementation = () => {
             </div>
           </SectionContainer>
 
-          <SectionContainer title="Living Stories" description="Real-world examples demonstrating our principles in action">
+          <SectionContainer title="Living Stories" description="Real-world examples demonstrating our principles in action.">
             <div className="mt-8">
               <StoryGallery limit={3} view="ET visual" />
             </div>
@@ -1147,14 +1203,23 @@ const EmpathyLedgerImplementation = () => {
       {/* Visualisations Tab */}
       {activeMainTab === 'visualisations' && (
         <>
+          <SectionContainer title="Proximity Cartography" description="Visualizing and navigating the distance between philanthropy and communities to foster transformative partnership and systems change.">
+            <ProximityCartography />
+          </SectionContainer>
+          <SectionContainer title="Ensemble Evidence Explorer" description="Integrating qualitative, quantitative, and narrative evidence for holistic understanding">
+            <EnsembleEvidenceExplorer width={800} height={500} />
+          </SectionContainer>
           <SectionContainer title="Narrative Sovereignty Visualization" description="Tracking how stories maintain integrity and control through their journey">
             <NarrativeSovereigntyJourney width={700} height={450} />
           </SectionContainer>
           <SectionContainer title="Value Exchange Ecosystem" description="Visualizing how stories generate and distribute value">
             <ValueExchangeEcosystem width={800} height={500} />
           </SectionContainer>
-          <SectionContainer title="Proximity Cartography" description="Visualizing and closing the distance between philanthropy and communities">
-            <ProximityCartography width={900} height={600} />
+          <SectionContainer title="Deep Listening Assessment" description="Visualizing the depth and impact of listening practices">
+            <DeepListeningDepthGauge width={900} height={600} organizationAssessment={sampleAssessment} />
+          </SectionContainer>
+          <SectionContainer title="Systems Change Dynamic Model" description="Visualizing how narrative exchange transforms systems">
+            <SystemsChangeDynamicModel width={900} height={600} />
           </SectionContainer>
         </>
       )}
