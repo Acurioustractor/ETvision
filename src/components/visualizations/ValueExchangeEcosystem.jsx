@@ -169,6 +169,7 @@ const ValueExchangeEcosystem = ({
       
     // Create sankey generator
     const sankeyGen = sankey()
+      .nodeId(d => d.id)
       .nodeWidth(20)
       .nodePadding(10)
       .extent([[0, 0], [innerWidth, innerHeight]]);
